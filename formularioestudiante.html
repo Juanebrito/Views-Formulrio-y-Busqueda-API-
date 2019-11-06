@@ -1,0 +1,79 @@
+<html>
+<head><title>Formulario Estudiante</title>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+ 
+  
+    <style>
+            .titulos_zue{
+           color:yellow;
+           font-size: 30px;
+           } 
+           .button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
+
+</style>
+
+
+</head>
+<body>
+
+
+        <center> <TABLE BORDER=10>
+        
+        <TR><TD BGCOLOR="purple">
+                <center>       <form id="formID" action="/estudiante1.php" method="POST">
+    <h1 class="titulos_zue"><p>Datos del Estudiante: </h1><br> <br></p> 
+ <p style="color:hsl(66, 100%, 50%); ;"> Nombre del estudiante: <input type="text" id="nombr"/></p>
+ <p    style="color:hsl(66, 100%, 50%);;" >Matricula : <input type="text" id="matricul"/></p>
+ <p style="color:hsl(66, 100%, 50%);;">Edad : <input type="text" id="ed"/></p></center>
+
+
+<center>
+  <input class="button" type="button" onclick="guardarestudiante(document.getElementById('nombr').value,document.getElementById('matricul').value,document.getElementById('ed').value)" value="Regitra Estudiante" />
+  <input class="button"type="reset" value="Nuevo">
+</center>
+</td>
+</tr>
+</table></center>
+  
+</form>
+</body>
+
+
+<script>
+          function guardarestudiante(nombr, matricul,ed) {
+            
+            
+                var data = {  "nombre": nombr,
+                "matricula": matricul,
+                "edad": ed,
+                    }
+            
+                fetch("/estudiante1.php", {
+                method: 'POST', 
+                body: JSON.stringify(data), 
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+                })
+                .then(function (data) {  
+                console.log('Request success: ', data);  
+                        })  
+                .catch(function (error) {  
+                console.log('Request failure: ', error);  
+                        });
+        
+        }
+</script>
+
+
+</html>

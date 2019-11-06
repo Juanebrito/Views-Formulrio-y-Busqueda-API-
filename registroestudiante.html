@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title > ESTUDIANTE </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+   
+    <style>
+         .titulos_rojos{
+        color:blue;
+        font-size: 30px;
+        } 
+        th, td, p, input {
+            font:18px Verdana;
+        }
+        table, th, td 
+        {
+            border: solid 3px rgb(7, 25, 187);
+            border-collapse: collapse;
+            padding: 6px 6px;
+            text-align: left;
+        }
+        th {
+            font-weight:bold;
+            
+        }
+         .button{
+   display: inline-block;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   
+                background: blue; padding: 10px; color: rgb(255, 255, 255);
+                box-shadow: 0 2px 2px yellow;
+                
+}
+
+        
+    </style>
+</head>
+
+
+<body>
+      
+    <center><h1 class="titulos_rojos"><b><i> ESTUDIANTE </i></b></h1>
+    <input  class="button" type="button" onclick="creartabla()" value="Buscar Estudiante" />
+    <br><br>
+    <p id="showData"></p> </center> 
+
+</body>
+
+
+<script>
+    
+  
+    function creartabla() {
+                            
+        fetch("/estudiante1.php")
+        .then( res=> res.json())
+        .then( estudiante=>{
+            
+            // extructura de la tabla 
+             
+            
+             var col = [];
+              for (var i = 0; i < estudiante.length; i++) {
+                 for (var key in estudiante[i]) {
+                   if (col.indexOf(key) === -1) {
+                    col.push(key);
+                    
+                    }
+                   }
+                }
+                 
+                 
+                     var table = document.createElement("table");
+                    
+                       
+                     var tr = table.insertRow(-1);                  
+                 for (var i = 0; i < col.length; i++) {
+                    var th = document.createElement("th");      
+                    th.innerHTML = col[i];
+                    tr.appendChild(th);
+                    }
+        
+       
+                     
+                 for (var i = 0; i < estudiante.length; i++) {
+                         tr = table.insertRow(-1);
+               
+                        for (var j = 0; j < col.length; j++) {
+                         var tabCell = tr.insertCell(-1);
+                        tabCell.innerHTML = estudiante[i][col[j]];
+                            }
+                    }
+                    
+                    var divContainer = document.getElementById("showData");
+                    divContainer.innerHTML = "";
+                    divContainer.appendChild(table);
+                    
+        })
+        
+        .catch( err => {
+            console.log(err);
+        });
+                    
+        
+    }
+</script>
+
+</html>
